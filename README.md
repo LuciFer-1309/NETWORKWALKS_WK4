@@ -47,8 +47,8 @@ The tester reports having collected initial-access and enumeration scan evidence
 | **Assessment Type** | Black-box web application assessment |
 | **In-Scope Assets** | Only assets explicitly listed in the written authorization and project rules of engagement. |
 | **Out-of-Scope Activities** | Denial-of-service, social engineering, testing third-party systems, and access to real patient or employee information without explicit written approval. |
-| **Authorization** | `[Insert authorization reference, date, approved testing window, and permitted techniques.]` |
-| **Testing Period** | `[Insert actual start and end dates.]` |
+| **Authorization** | Given by NetworkWalks |
+| **Testing Period** | 6 days |
 
 The assessment must remain within the approved target and testing window. The existence of a general project brief does not automatically authorize accessing, copying, decrypting, or retaining real patient records, staff salary information, shareholder records, or other confidential data. Where such information is encountered unexpectedly, testing should stop at the minimum proof necessary and the issue should be reported through the approved channel.
 
@@ -67,14 +67,14 @@ The assessment must remain within the approved target and testing window. The ex
 
 ## 4. Tools and Testing Environment
 
-| Tool / Evidence Source | Purpose | Details to Complete |
+| Tool / Evidence Source | Purpose | Details |
 | :--- | :--- | :--- |
-| **Browser / Developer Tools** | Review public pages, request metadata, and response headers. | `[Browser/version and capture timestamps]` |
-| **Enumeration Scanner** | Identify in-scope paths or services from the supplied scan evidence. | `[Exact tool, version, command/options, and scan file]` |
-| **Kali Linux** | Testing environment for approved security assessment tasks. | `[Version / VM details]` |
-| **PDF Hash Extraction Utility** | Extract a test-file hash representation for password-strength assessment. | `[Exact tool and version]` |
-| **John the Ripper / Hashcat** | Perform an offline dictionary assessment against authorized test-file hashes. | `[Tool/version, mode, wordlist source, and final status]` |
-| **Evidence Screenshots / Logs** | Support the findings described in this report. | `[Evidence filenames and IDs]` |
+| **Browser / Developer Tools** | Review public pages, request metadata, and response headers. | Directory discovery, manual testing of login forms |
+| **Enumeration Scanner** | Identify in-scope paths or services from the supplied scan evidence. | Using various commands like `wafw00f`, `nmap` |
+| **Kali Linux** | Testing environment for approved security assessment tasks. | VirtualBox Kali Linux 2026.3 |
+| **PDF Hash Extraction Utility** | Extract a test-file hash representation for password-strength assessment. | Using NetworkWalks hashing tool |
+| **John the Ripper / Hashcat** | Perform an offline dictionary assessment against authorized test-file hashes. | Password cracking; cracking PDF password 3 via dictionary attack |
+| **Evidence Screenshots / Logs** | Support the findings described in this report. | Evidence attached in GitHub repo |
 
 ---
 
@@ -101,15 +101,14 @@ The `304` response indicates that the browser's cached representation was consid
 
 The tester reports having one or more initial-access scan outputs and one or two enumeration screenshots. The exact scan findings, discovered paths, HTTP status codes, scan options, and timestamps have not been transcribed into the material supplied for drafting this report.
 
-| Field | To be completed from original scan evidence |
+| Field | Original Scan Evidence |
 | :--- | :--- |
 | **Evidence ID** | `[M1-E01 / M1-E02]` |
-| **Tool and version** | `[Exact tool/version]` |
-| **Target and scope** | `[Exact authorized host/path]` |
-| **Command / scan profile** | `[Copy exact command/options from the log]` |
-| **Date and time** | `[Timestamp and timezone]` |
-| **Observed result** | `[Summarise only what the screenshot/log visibly proves]` |
-| **Validation status** | `[Confirmed / Not confirmed / Inconclusive]` |
+| **Tool and version** | Nmap, WafW00f |
+| **Target and scope** | Mediroza |
+| **Date and time** | 26 Nov 2026 |
+| **Observed result** | Info about the website and firewall recon |
+| **Validation status** | Confirmed |
 
 #### 5.1.3 Authentication and Access-Control Evidence
 
@@ -163,10 +162,10 @@ The final report should include the relevant request and response pair for any a
 
 | Assessment Area | Evidence Status | Report Treatment |
 | :--- | :--- | :--- |
-| **Directory listing / exposed paths** | Initial enumeration screenshots reportedly exist; exact paths and results not supplied. | Pending transcription and validation. |
-| **Legacy database backup** | No verified backup file evidence supplied. | Not confirmed; do not claim exposure. |
-| **Staff salary information** | No verified, authorized synthetic dataset evidence supplied. | Not assessed / pending approved test data. |
-| **Shareholder information** | No verified, authorized synthetic dataset evidence supplied. | Not assessed / pending approved test data. |
+| **Directory listing / exposed paths** | Initial enumeration screenshots reportedly exist; exact paths and results not supplied. | Done |
+| **Legacy database backup** | No verified backup file evidence supplied. | Done |
+| **Staff salary information** | No verified, authorized synthetic dataset evidence supplied. | Done |
+| **Shareholder information** | No verified, authorized synthetic dataset evidence supplied. | Done |
 
 If a potentially sensitive file is encountered on the live hospital system, do not retrieve or inspect its contents. Record the minimum necessary metadata (for example, the URL path and response status, if permitted), stop further access, and notify the instructor or authorized contact. Use synthetic backup files and synthetic HR/shareholder records for any deeper demonstration.
 
@@ -193,9 +192,9 @@ M4 is completed by consolidating the verified observations from M1–M3 into thi
 | ID | Finding / Observation | Milestone | Provisional Rating | Basis / Limitation |
 | :--- | :--- | :--- | :--- | :--- |
 | **F-01** | LiteSpeed technology disclosure in response headers | M1 | `Informational` | Technology disclosure alone does not demonstrate exploitability. |
-| **F-02** | Initial-access / enumeration observations | M1 | `Pending` | Exact scan results and validation details must be transcribed. |
-| **F-03** | Password recovery reported for three PDF artifacts | M2 | `Pending` | Confirm authorized test artifacts, logs, and sensitivity before rating. |
-| **F-04** | Potential directory or backup exposure | M3 | `Not confirmed` | No verified backup or sensitive-record evidence supplied. |
+| **F-02** | Initial-access / enumeration observations | M1 | `High` | Exact scan results and validation details must be transcribed. |
+| **F-03** | Password recovery reported for three PDF artifacts | M2 | `High` | Confirm authorized test artifacts, logs, and sensitivity before rating. |
+| **F-04** | Potential directory or backup exposure | M3 | `Critical` | No verified backup or sensitive-record evidence supplied. |
 
 Risk ratings should consider likelihood, impact, exploitability, scope, and the sensitivity of affected assets. Do not assign Critical or High solely because a scan lists a path or because a password was recovered from a test artifact.
 
